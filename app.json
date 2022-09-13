@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "drayplan-rn",
+    "slug": "drayplan-rn",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "drayplan-rn"
+}
