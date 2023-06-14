@@ -2,18 +2,20 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState }  from "react";
 import { StyleSheet, Text, View } from "react-native";
 import GetLocation from "react-native-get-location";
-import { uuid } from 'uuidv4';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
-  const [loc, setLoc] = useState();
-  const id = uuid();
+  const [loc, setLoc] = useState({});
+  const id = uuidv4();
 
   GetLocation.getCurrentPosition({
     enableHighAccuracy: true,
   })
     .then((location) => {
-      if (location.latitude !== loc.latitude && location.longitude !== loc.longitude) {
+      if ((location.latitude !== loc.latitude && location.longitude !== loc.longitude)) {
         setLoc(location);
+        console.log(location);
       }
     })
     .catch((error) => {
@@ -21,7 +23,7 @@ export default function App() {
       console.warn(code, message);
     });
 
-  React.useEffect(() => {
+  const sendBeacon = async() => {
     const rawResponse = await fetch('https://us-central1-warm-sunlight-227712.cloudfunctions.net/beacon', {
       method: 'POST',
       headers: {
@@ -33,11 +35,17 @@ export default function App() {
         lat: loc.latitude,
         long: loc.longitude,
         time: loc.time,
+        speed: loc.speed,
+        accuracy: loc.accuracy,
       })
     });
     const content = await rawResponse.json();
   
     console.log(content);
+  }
+
+  React.useEffect(() => {
+    sendBeacon();
   }, [loc]);
 
   return (

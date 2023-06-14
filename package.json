@@ -16,7 +16,9 @@
     "react-dom": "18.0.0",
     "react-native": "0.70.0",
     "react-native-get-location": "^2.2.1",
+    "react-native-get-random-values": "^1.8.0",
     "react-native-web": "~0.18.7",
+    "util": "^0.12.4",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
